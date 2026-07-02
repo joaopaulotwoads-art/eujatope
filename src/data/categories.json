@@ -1,0 +1,8 @@
+[
+  { "name": "Fruit Ninja", "slug": "fruit-ninja", "description": "Guias, dicas e estratégias para o Fruit Ninja" },
+  { "name": "Jogos Ninja", "slug": "jogos-ninja", "description": "Os melhores jogos de ninja para celular e PC" },
+  { "name": "Reviews", "slug": "reviews", "description": "Reviews honestos dos melhores jogos de cortar frutas" },
+  { "name": "Rankings", "slug": "rankings", "description": "Como subir no placar e dominar o ranking global" },
+  { "name": "Dicas", "slug": "dicas", "description": "Estratégias, combos e segredos para pontuação máxima" },
+  { "name": "Jogos Mobile", "slug": "jogos-mobile", "description": "Os melhores jogos de ação para celular" }
+]

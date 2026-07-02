@@ -1,0 +1,106 @@
+{
+  "hero": {
+    "badge": "Guias e Reviews de Jogos de Cortar Frutas",
+    "title": "Domine cada partida do Fruit Ninja",
+    "subtitle": "Guias práticos, dicas de pontuação e reviews dos melhores jogos de cortar frutas para celular e PC.",
+    "ctaPrimary": {
+      "text": "Ver Artigos",
+      "href": "/blog"
+    },
+    "ctaSecondary": {
+      "text": "Ver Rankings",
+      "href": "/blog?cat=rankings"
+    },
+    "image": "/images/hero.jpg",
+    "stats": [
+      {
+        "number": "100+",
+        "label": "Jogos Analisados"
+      },
+      {
+        "number": "100%",
+        "label": "Dicas Práticas"
+      },
+      {
+        "number": "2026",
+        "label": "Guias Atualizados"
+      }
+    ]
+  },
+  "socialProof": {
+    "stats": [
+      {
+        "number": "3x",
+        "suffix": "",
+        "label": "Multiplicador de Pontos",
+        "detail": "Como ativar e manter o modo Frenzy no Fruit Ninja"
+      },
+      {
+        "number": "50+",
+        "suffix": "",
+        "label": "Fases Desbloqueáveis",
+        "detail": "Classic, Arcade e Zen — qual modo vale mais a pena"
+      },
+      {
+        "number": "S+",
+        "suffix": "",
+        "label": "Rank Máximo",
+        "detail": "Estratégias para chegar ao topo do placar global"
+      },
+      {
+        "number": "0",
+        "suffix": "",
+        "label": "Bombas Acertadas",
+        "detail": "Como evitar bombas e manter o combo ativo"
+      }
+    ],
+    "brands": [
+      "Fruit Ninja",
+      "Fruit Ninja Classic",
+      "Fruit Ninja VR",
+      "Slice It All",
+      "Fruit Cut",
+      "Ninja Fruit"
+    ]
+  },
+  "postsGrid": {
+    "label": "Blog",
+    "title": "Últimos Artigos",
+    "subtitle": "Reviews, rankings e dicas dos melhores jogos de cortar frutas — tudo para você dominar o placar.",
+    "limit": 6,
+    "ctaText": "Ver Todos os Artigos",
+    "ctaHref": "/blog"
+  },
+  "about": {
+    "label": "Sobre o Site",
+    "title": "Ajudamos você a dominar",
+    "titleAccent": "cada partida",
+    "text1": "O Eu Jatopê nasceu para quem quer melhorar no Fruit Ninja e jogos similares: comparamos mecânicas, explicamos estratégias e ensinamos como subir no ranking com dicas diretas ao ponto.",
+    "text2": "Testamos cada modo e cada jogo da categoria — sempre com transparência sobre links de afiliado.",
+    "ctaPrimary": {
+      "text": "Saiba Mais",
+      "href": "/sobre"
+    },
+    "ctaSecondary": {
+      "text": "Fale Conosco",
+      "href": "/contato"
+    },
+    "features": [
+      {
+        "number": "01",
+        "title": "Dicas Objetivas",
+        "description": "Estratégias claras para aumentar pontuação, manter combos e desbloquear itens raros."
+      },
+      {
+        "number": "02",
+        "title": "Transparência",
+        "description": "Links de afiliado são sinalizados. Nossa prioridade é a sua diversão, não a comissão."
+      },
+      {
+        "number": "03",
+        "title": "Por Jogo",
+        "description": "Fruit Ninja, Slice It All, Fruit Cut — cada jogo tem suas próprias mecânicas e estratégias."
+      }
+    ]
+  }
+}

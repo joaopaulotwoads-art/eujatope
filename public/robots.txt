@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://melhoresbinoculos.com.br/sitemap-index.xml

@@ -1,0 +1,287 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { readData } from '../lib/readData';
+
+const site = readData('siteConfig.json') || {};
+const menu = readData('menu.json') || { items: [] };
+const authors: Array<{ name: string; avatar: string; bio: string; url: string }> = readData('authors.json') || [];
+
+interface Product {
+  name: string;
+  price?: string;
+  affiliateLink: string;
+  rating?: number;
+  image?: string;
+}
+
+interface Breadcrumb {
+  name: string;
+  url: string;
+}
+
+interface Faq {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  title: string;
+  seoTitle?: string;
+  description: string;
+  image?: string;
+  canonicalURL?: string;
+  type?: 'website' | 'article';
+  pubDate?: Date;
+  updatedDate?: Date;
+  author?: string;
+  tags?: string[];
+  products?: Product[];
+  breadcrumbs?: Breadcrumb[];
+  faqs?: Faq[];
+  relatedLinks?: string[];
+}
+
+const {
+  title,
+  seoTitle,
+  description,
+  image = '/images/og-default.jpg',
+  canonicalURL = Astro.url.href,
+  type = 'website',
+  pubDate,
+  updatedDate,
+  author = site.author || 'Melhores Binóculos',
+  tags = [],
+  products = [],
+  breadcrumbs = [],
+  faqs = [],
+  relatedLinks = [],
+} = Astro.props;
+
+const siteName = site.name || 'Melhores Binóculos';
+const fullTitle = `${seoTitle || title} | ${siteName}`;
+const siteUrl = (Astro.site?.toString() || site.url || 'https://melhoresbinoculos.com.br').replace(/\/$/, '');
+const currentPath = new URL(canonicalURL).pathname;
+
+// ─── @graph: schema único ─────────────────────────────────────────────────
+const authorData = (authors as Array<{ name: string; avatar?: string; bio?: string; url?: string; jobTitle?: string }>).find((a) => a.name === author) || authors[0] as { name: string; avatar?: string; bio?: string; url?: string; jobTitle?: string };
+const imageUrl = image ? new URL(image, siteUrl).toString() : '';
+const socialLinks = Object.values(site.social || {}).filter(Boolean) as string[];
+
+const graphItems: object[] = [];
+
+if (type === 'article') {
+  graphItems.push({
+    '@type': 'Article',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalURL },
+    headline: seoTitle || title,
+    description,
+    image: imageUrl,
+    ...(tags.length ? { keywords: tags.join(', ') } : {}),
+    inLanguage: site.language || 'pt-BR',
+    thumbnailUrl: imageUrl,
+    author: [
+      {
+        '@type': 'Person',
+        name: authorData?.name || author,
+        ...(authorData?.avatar ? { image: new URL(authorData.avatar, siteUrl).toString() } : {}),
+        ...(authorData?.bio ? { description: authorData.bio } : {}),
+        ...(authorData?.url ? { url: new URL(authorData.url, siteUrl).toString() } : {}),
+        ...(authorData?.jobTitle ? { jobTitle: authorData.jobTitle } : {}),
+        ...(socialLinks.length ? { sameAs: socialLinks } : {}),
+      },
+      {
+        '@type': 'Organization',
+        name: siteName,
+        ...(site.logo ? { image: new URL(site.logo, siteUrl).toString() } : {}),
+        ...(site.description ? { description: site.description } : {}),
+        url: siteUrl,
+      },
+    ],
+    publisher: {
+      '@type': 'Organization',
+      name: siteName,
+      logo: {
+        '@type': 'ImageObject',
+        url: site.logo ? new URL(site.logo, siteUrl).toString() : `${siteUrl}/favicon.ico`,
+      },
+      sameAs: socialLinks,
+    },
+    ...(pubDate ? { datePublished: pubDate.toISOString() } : {}),
+    ...(updatedDate ? { dateModified: updatedDate.toISOString() } : {}),
+    ...(relatedLinks.length ? { relatedLink: relatedLinks } : {}),
+  });
+}
+
+if (breadcrumbs.length > 0) {
+  graphItems.push({
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbs.map((crumb, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: crumb.name,
+      item: `${siteUrl}${crumb.url}`,
+    })),
+  });
+}
+
+graphItems.push({
+  '@type': 'WebSite',
+  name: siteName,
+  url: siteUrl,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${siteUrl}/blog?q={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
+});
+
+if (currentPath.startsWith('/contato')) {
+  graphItems.push({
+    '@type': 'ContactPage',
+    name: 'Contato',
+    url: `${siteUrl}/contato`,
+    ...(site.contact?.phone || site.contact?.email ? {
+      contactPoint: {
+        '@type': 'ContactPoint',
+        ...(site.contact.phone ? { telephone: site.contact.phone } : {}),
+        ...(site.contact.email ? { email: site.contact.email } : {}),
+      },
+    } : {}),
+  });
+}
+
+if (currentPath.startsWith('/sobre')) {
+  graphItems.push({ '@type': 'AboutPage', name: 'Sobre Nós', url: `${siteUrl}/sobre` });
+}
+
+graphItems.push({
+  '@type': 'Organization',
+  logo: {
+    '@type': 'ImageObject',
+    url: site.logo ? new URL(site.logo, siteUrl).toString() : `${siteUrl}/favicon.ico`,
+  },
+  ...(site.contact?.email ? { email: site.contact.email } : {}),
+  ...(site.contact?.phone ? { telephone: site.contact.phone } : {}),
+  url: siteUrl,
+  name: siteName,
+});
+
+graphItems.push({
+  '@type': 'SiteNavigationElement',
+  name: 'Navegação Principal',
+  mainContentOfPage: { '@type': 'WebPage', '@id': siteUrl },
+  hasPart: (menu.items as { label: string; href: string }[]).map((item) => ({
+    '@type': 'NavigationLink',
+    name: item.label,
+    url: `${siteUrl}${item.href}`,
+  })),
+});
+
+if (type === 'article' && authorData) {
+  graphItems.push({
+    '@type': 'Person',
+    name: authorData.name || author,
+    ...(authorData.avatar ? { image: new URL(authorData.avatar, siteUrl).toString() } : {}),
+    ...(authorData.jobTitle ? { jobTitle: authorData.jobTitle } : {}),
+    ...(authorData.url ? { url: new URL(authorData.url, siteUrl).toString() } : {}),
+  });
+}
+
+if (faqs.length > 0) {
+  graphItems.push({
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: { '@type': 'Answer', text: faq.a },
+    })),
+  });
+}
+
+const schemaGraph = { '@context': 'https://schema.org', '@graph': graphItems };
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    {author && <meta name="author" content={author} />}
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="pt_BR" />
+    {pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
+    {updatedDate && <meta property="article:modified_time" content={updatedDate.toISOString()} />}
+    {author && <meta property="article:author" content={author} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.site)} />
+
+    <!-- Fonts — Instrument Serif (display) + Outfit (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- RSS -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={siteName}
+      href={new URL('/rss.xml', Astro.site)}
+    />
+
+    <!-- JSON-LD: @graph -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </head>
+  <body class="grain">
+    <Navbar />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      document.querySelectorAll('.animate-on-scroll, .stagger-children').forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>

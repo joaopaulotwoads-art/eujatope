@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\João\\\\Desktop\\\\vibe\\\\afiliado-saude-main\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)",
+      "Bash(Format-Table -AutoSize)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\João\\\\Desktop\\\\vibe\\\\afiliado-saude-main\\\\src\" -Recurse -Force | Select-Object FullName | ForEach-Object { $_.FullName -replace [regex]::Escape\\(\"C:\\\\Users\\\\João\\\\Desktop\\\\vibe\\\\afiliado-saude-main\"\\), \"\" })",
+      "WebFetch(domain:wptablebuilder.com)",
+      "WebFetch(domain:guiaomelhor.com.br)",
+      "Bash(sed -i 's|`/blog/${slug}`|`/${slug}`|g' \"C:/Users/João/Desktop/vibe/afiliado-saude-main/src/components/PostCard.astro\")",
+      "Bash(sed -i 's|`/blog/${post.id}/`|`/${post.id}/`|g' \"C:/Users/João/Desktop/vibe/afiliado-saude-main/src/pages/rss.xml.ts\")",
+      "Bash(sed -i 's|`/blog/${post.slug}`|`/${post.slug}`|g' \"C:/Users/João/Desktop/vibe/afiliado-saude-main/src/plugins/related-posts/RelatedPosts.astro\")",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\João\\\\Desktop\\\\vibe\\\\afiliado-saude-main\\\\src\\\\pages\" -Recurse -Filter \"*.{tsx,ts,astro}\")",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "PowerShell(Get-Command *)",
+      "WebSearch",
+      "WebFetch(domain:analisamelhor.com.br)",
+      "WebFetch(domain:melhorbeleza.com.br)",
+      "WebFetch(domain:reidoeletro.com.br)",
+      "WebFetch(domain:senhordoeletro.com.br)",
+      "WebFetch(domain:br.my-best.com)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Projects\\\\tintanocabelo\" -Recurse -Directory)",
+      "Bash(Select-Object FullName)",
+      "Bash(xargs grep -l \"affiliate\\\\|ProductBox\\\\|ProductReviewCard\\\\|ComparisonTable\")",
+      "Bash(xargs grep -l \"ProductBox\\\\|ProductReviewCard\\\\|ComparisonTable\\\\|AffiliateProducts\")",
+      "Bash(Remove-Item \"C:\\\\Projects\\\\eujatope\\\\src\\\\content\\\\blog\\\\cronograma-capilar-iniciantes.md\" -Force)",
+      "Bash(Remove-Item \"C:\\\\Projects\\\\eujatope\\\\src\\\\content\\\\blog\\\\melhor-chapinha.md\" -Force)",
+      "Bash(Get-ChildItem \"C:\\\\Projects\\\\eujatope\\\\src\\\\content\\\\blog\\\\\")",
+      "Bash(gh auth *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}

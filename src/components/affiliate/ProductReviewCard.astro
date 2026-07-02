@@ -1,0 +1,525 @@
+---
+import RatingStars from './RatingStars.astro';
+
+interface Props {
+  name: string;
+  description?: string;
+  review?: string;
+  price?: string;
+  originalPrice?: string;
+  rating?: number;
+  affiliateLink: string;
+  mlLink?: string;
+  store?: string;
+  image?: string;
+  badge?: string;
+  pros?: string[];
+  cons?: string[];
+  index?: number;
+}
+
+const {
+  name,
+  description,
+  review,
+  price,
+  originalPrice,
+  rating,
+  affiliateLink,
+  mlLink,
+  store = 'outro',
+  image,
+  badge,
+  pros = [],
+  cons = [],
+  index = 1,
+} = Astro.props;
+
+const storeLabels: Record<string, string> = {
+  amazon: 'Ver na Amazon',
+  hotmart: 'Acessar Curso',
+  eduzz: 'Acessar Produto',
+  monetizze: 'Acessar Produto',
+  'mercado-livre': 'Ver no Mercado Livre',
+  shopee: 'Ver na Shopee',
+  outro: 'Ver Oferta',
+};
+
+const ctaLabel = storeLabels[store] || 'Ver Oferta';
+const mlHref = mlLink || `https://www.mercadolivre.com.br/search?q=${encodeURIComponent(name)}`;
+
+const discount =
+  originalPrice && price
+    ? Math.round(
+        (1 -
+          parseFloat(price.replace(/[^\d]/g, '')) /
+            parseFloat(originalPrice.replace(/[^\d]/g, ''))) *
+          100
+      )
+    : null;
+
+const ratingLabel = rating
+  ? rating >= 4.5 ? 'Excelente'
+  : rating >= 4   ? 'Muito Bom'
+  : rating >= 3.5 ? 'Bom'
+  : 'Regular'
+  : null;
+
+const badgeMap: Record<string, { label: string; cls: string }> = {
+  'top-pick':      { label: 'Melhor no Geral',       cls: 'badge--gold'   },
+  'best-value':    { label: 'Melhor Custo-Benefício', cls: 'badge--green'  },
+  'editor-choice': { label: 'Escolha do Editor',       cls: 'badge--purple' },
+};
+const badgeInfo = badge ? badgeMap[badge] : null;
+const reviewId = `review-${index}`;
+
+function toParagraphs(text: string, perParagraph = 2): string[] {
+  const sentences = text.match(/[^.!?]+[.!?]+["']?/g) ?? [text];
+  const out: string[] = [];
+  for (let i = 0; i < sentences.length; i += perParagraph) {
+    out.push(sentences.slice(i, i + perParagraph).join(' ').trim());
+  }
+  return out;
+}
+const reviewParagraphs = review ? toParagraphs(review) : [];
+---
+
+<div class="prc">
+
+  {/* ── 1. Título com borda esquerda laranja ── */}
+  <div class="prc__title-bar">
+    <h2 class="prc__name">
+      <span class="prc__rank">#{index}</span>
+      {name}
+    </h2>
+  </div>
+
+  {/* ── 2. Card hero com borda cinza ── */}
+  <div class="prc__hero">
+    <div class="prc__img-wrap">
+      {image ? (
+        <img src={image} alt={name} loading="lazy" class="prc__img" />
+      ) : (
+        <div class="prc__img-placeholder">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.12">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/>
+            <path d="M21 15l-5-5L5 21" stroke-width="1.5"/>
+          </svg>
+        </div>
+      )}
+    </div>
+
+    <div class="prc__meta">
+
+      {rating && (
+        <div class="prc__rating">
+          <RatingStars rating={rating} size="sm" />
+          <span class="prc__score">{rating.toFixed(1)}/5</span>
+          <span class="prc__score-label">{ratingLabel}</span>
+        </div>
+      )}
+
+      {description && <p class="prc__desc">{description}</p>}
+
+      <div class="prc__buttons">
+        <a href={affiliateLink} class="prc__btn-primary" target="_blank" rel="sponsored noopener">
+          <span>{ctaLabel}</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+        </a>
+        <a href={mlHref} class="prc__btn-ml" target="_blank" rel="sponsored noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Ver no Mercado Livre
+        </a>
+      </div>
+
+      <span class="prc__trust">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Compra segura · Link verificado
+      </span>
+    </div>
+  </div>
+
+  {/* ── 3. Review: texto limpo, sem caixa ── */}
+  {reviewParagraphs.length > 0 && (
+    <div class="prc__review" id={reviewId}>
+      {reviewParagraphs.map((p) => (
+        <p class="prc__review-p">{p}</p>
+      ))}
+    </div>
+  )}
+
+  {/* ── 4. Prós e Contras: só estes têm caixas coloridas ── */}
+  {(pros.length > 0 || cons.length > 0) && (
+    <div class="prc__verdict">
+      {pros.length > 0 && (
+        <div class="prc__list prc__list--pros">
+          <p class="prc__list-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Prós
+          </p>
+          <ul>
+            {pros.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      )}
+      {cons.length > 0 && (
+        <div class="prc__list prc__list--cons">
+          <p class="prc__list-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Contras
+          </p>
+          <ul>
+            {cons.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+  )}
+
+  {/* ── Divisor sutil entre produtos ── */}
+  <div class="prc__divider" aria-hidden="true"></div>
+
+</div>
+
+<style>
+  /* ── Wrapper: sem caixa, fundo da página ── */
+  .prc {
+    padding: var(--space-2xl) 0 0;
+  }
+
+  /* ────────────────────────────────────────
+     1. TÍTULO com borda esquerda laranja
+  ──────────────────────────────────────── */
+  .prc__title-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .prc__name {
+    border-left: 4px solid #f97316;
+    padding-left: 0.75rem;
+    font-family: var(--font-heading);
+    font-size: var(--fs-xl);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-tight);
+    line-height: var(--lh-snug);
+    color: var(--color-text);
+    margin: 0;
+    flex: 1;
+  }
+
+  .prc__rank {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-extrabold);
+    color: var(--color-text-faint);
+    margin-right: 0.3rem;
+  }
+
+  .prc__badge {
+    font-size: 0.68rem;
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-wide);
+    padding: 0.2rem 0.65rem;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .badge--gold   { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+  .badge--green  { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+  .badge--purple { background: #ede9fe; color: #3730a3; border: 1px solid #c4b5fd; }
+
+  /* ────────────────────────────────────────
+     2. HERO CARD — borda cinza outline
+  ──────────────────────────────────────── */
+  .prc__hero {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    border: 1.5px solid #e5e7eb;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  .prc__img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 280px;
+    background: #f9fafb;
+    border-right: 1px solid #e5e7eb;
+    padding: 1.25rem;
+  }
+
+  .prc__img {
+    max-width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+    transition: transform var(--transition-base);
+  }
+
+  .prc__hero:hover .prc__img { transform: scale(1.04); }
+
+  .prc__img-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 120px;
+  }
+
+  .prc__meta {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  /* Rating */
+  .prc__rating {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .prc__score {
+    font-family: var(--font-heading);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-extrabold);
+    color: var(--color-accent);
+  }
+
+  .prc__score-label {
+    font-size: 0.65rem;
+    font-weight: var(--fw-medium);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wider);
+  }
+
+  /* Descrição */
+  .prc__desc {
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+    line-height: var(--lh-relaxed);
+    font-style: italic;
+    margin: 0;
+  }
+
+  /* Botões */
+  .prc__buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.25rem;
+    flex-wrap: wrap;
+  }
+
+  .prc__btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.5rem;
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    box-shadow: 0 2px 10px rgba(201,162,39,0.25);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .prc__btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 600ms var(--ease-out-expo);
+  }
+
+  .prc__btn-primary:hover { color:#fff; transform:translateY(-1px); box-shadow:0 5px 18px rgba(201,162,39,0.38); }
+  .prc__btn-primary:hover::before { transform: translateX(100%); }
+
+  /* Botão secundário: outline cinza */
+  .prc__btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.25rem;
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: #6b7280;
+    border: 1.5px solid #d1d5db;
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    background: transparent;
+    transition: all var(--transition-fast);
+  }
+
+  .prc__btn-secondary:hover {
+    color: #374151;
+    border-color: #9ca3af;
+    background: #f9fafb;
+  }
+
+  .prc__btn-ml {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.25rem;
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: #333;
+    border: 1.5px solid #ffe600;
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    background: #ffe600;
+    transition: all var(--transition-fast);
+  }
+
+  .prc__btn-ml:hover {
+    background: #f0d800;
+    border-color: #f0d800;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(255,230,0,0.4);
+  }
+
+  /* Trust */
+  .prc__trust {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.6rem;
+    color: var(--color-text-faint);
+    font-weight: var(--fw-light);
+  }
+
+  /* ────────────────────────────────────────
+     3. REVIEW — texto limpo, sem caixa
+  ──────────────────────────────────────── */
+  .prc__review {
+    margin-bottom: 1.5rem;
+  }
+
+  .prc__review-label {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wider);
+    color: var(--color-text-muted);
+    margin-bottom: 0.65rem;
+  }
+
+  .prc__review-p {
+    font-size: var(--fs-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.9;
+    font-weight: var(--fw-light);
+    margin: 0 0 1.6rem;
+  }
+
+  .prc__review-p:last-child { margin-bottom: 0; }
+
+  /* ────────────────────────────────────────
+     4. PRÓS E CONTRAS — caixas coloridas
+  ──────────────────────────────────────── */
+  .prc__verdict {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .prc__list {
+    padding: 1rem 1.15rem 1.1rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .prc__list--pros {
+    background: #f0fdf4;
+    border: 1.5px solid #bbf7d0;
+  }
+
+  .prc__list--cons {
+    background: #fff5f5;
+    border: 1.5px solid #fecaca;
+  }
+
+  .prc__list-title {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
+    margin-bottom: 0.75rem;
+  }
+
+  .prc__list--pros .prc__list-title { color: #15803d; }
+  .prc__list--cons .prc__list-title { color: #dc2626; }
+
+  /* Lista sem marcadores, com espaçamento entre linhas */
+  .prc__list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .prc__list li {
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    font-weight: var(--fw-regular);
+    padding: 0;
+  }
+
+  .prc__list--pros li { color: #166534; }
+  .prc__list--cons li { color: #991b1b; }
+
+  /* ── Divisor sutil ── */
+  .prc__divider {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      #e5e7eb 20%,
+      #e5e7eb 80%,
+      transparent
+    );
+    margin: var(--space-2xl) 0 0;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .prc__hero {
+      grid-template-columns: 1fr;
+    }
+
+    .prc__img-wrap {
+      border-right: none;
+      border-bottom: 1px solid #e5e7eb;
+      min-height: 200px;
+    }
+
+    .prc__img { max-height: 170px; }
+
+    .prc__btn-primary,
+    .prc__btn-ml { flex: 1; justify-content: center; }
+
+    .prc__verdict {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

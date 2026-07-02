@@ -1,0 +1,39 @@
+{
+  "name": "Eu Jatopê",
+  "description": "Guias, dicas e reviews dos melhores jogos de cortar frutas — Fruit Ninja, jogos ninja e similares.",
+  "url": "https://eujatope.com.br",
+  "author": "Camila Souza",
+  "language": "pt-BR",
+  "logo": "",
+  "logoMark": "",
+  "ctaText": "Ver Artigos",
+  "ctaHref": "/blog",
+  "theme": {
+    "primary": "#16a34a",
+    "accent": "#4ade80",
+    "font": "poppins",
+    "dark": "#0f172a"
+  },
+  "social": {
+    "instagram": "",
+    "twitter": "",
+    "facebook": "",
+    "pinterest": "",
+    "youtube": ""
+  },
+  "contact": {
+    "email": "contato@eujatope.com.br",
+    "phone": "",
+    "address": "",
+    "name": ""
+  },
+  "legal": {
+    "terms_last_updated": "",
+    "privacy_last_updated": ""
+  },
+  "phone": "",
+  "address": "",
+  "ai": {
+    "openaiKey": ""
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "seo": {
+    "title": "Sobre",
+    "description": "Conheça o Eu Jatopê: guias, reviews e dicas dos melhores jogos de cortar frutas para dominar o placar.",
+    "image": ""
+  },
+  "hero": {
+    "label": "Sobre Nós",
+    "title": "O guia que faltava para",
+    "titleAccent": "dominar o Fruit Ninja",
+    "subtitle": "Somos um site especializado em jogos de cortar frutas. Nossa missão é traduzir mecânicas e estratégias em resultados reais para você subir no ranking."
+  },
+  "story": {
+    "label": "Nossa História",
+    "title": "De iniciante a",
+    "titleAccent": "referência nos jogos ninja",
+    "paragraphs": [
+      "Muita gente começa no Fruit Ninja sem entender direito as mecânicas: erra as bombas, perde o combo, não sabe qual lâmina usar. Criamos este site para resolver isso.",
+      "Comparamos modos de jogo, explicamos o que muda entre Classic, Arcade e Zen, e mostramos como montar uma estratégia de pontuação que realmente funciona.",
+      "Se não recomendaríamos para um amigo, o guia não entra no site. Critério simples, opinião honesta."
+    ],
+    "stats": [
+      { "number": "100+", "label": "Jogos analisados" },
+      { "number": "6", "label": "Categorias de conteúdo" },
+      { "number": "100%", "label": "Conteúdo independente" },
+      { "number": "2026", "label": "Guias atualizados" }
+    ]
+  },
+  "values": {
+    "label": "Nossos Valores",
+    "title": "O que nos guia",
+    "subtitle": "Cada review e guia segue estes princípios.",
+    "items": [
+      { "number": "01", "title": "Honestidade", "text": "Se o jogo não entrega o que promete, dizemos. Não inflamos nota nem escondemos limitações." },
+      { "number": "02", "title": "Transparência", "text": "Usamos links de afiliado e você sempre sabe. Isso mantém o site gratuito sem comprometer a análise." },
+      { "number": "03", "title": "Critério Técnico", "text": "Mecânicas, física dos cortes, modos de jogo e sistema de pontuação são avaliados com cuidado." },
+      { "number": "04", "title": "Linguagem Clara", "text": "Escrevemos para jogadores de todos os níveis. Termos técnicos sempre explicados." }
+    ]
+  },
+  "timeline": {
+    "label": "Linha do Tempo",
+    "title": "Nossa jornada",
+    "items": [
+      { "year": "2025", "title": "Ideia", "text": "Primeiros guias e reviews focados em jogos de cortar frutas e mecânicas ninja." },
+      { "year": "2026", "title": "Lançamento", "text": "Site Eu Jatopê no ar com dicas, rankings e reviews para todos os níveis de jogador." }
+    ]
+  },
+  "cta": {
+    "title": "Pronto para dominar",
+    "titleAccent": "o placar?",
+    "text": "Explore guias, rankings e reviews atualizados para o seu jogo favorito.",
+    "ctaPrimary": { "text": "Ver Blog", "href": "/blog" },
+    "ctaSecondary": { "text": "Fale Conosco", "href": "/contato" }
+  }
+}

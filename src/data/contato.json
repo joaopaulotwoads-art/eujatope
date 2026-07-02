@@ -1,0 +1,56 @@
+{
+  "seo": {
+    "title": "Contato",
+    "description": "Entre em contato com o Eu Jatopê. Tire dúvidas sobre jogos, sugira temas para artigos ou proponha parceria.",
+    "image": ""
+  },
+  "hero": {
+    "label": "Contato",
+    "title": "Fale",
+    "titleAccent": "conosco",
+    "subtitle": "Tem dúvida sobre um jogo, sugestão de tema para artigo ou proposta de parceria? Envie sua mensagem."
+  },
+  "methods": [
+    {
+      "icon": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z\"/><polyline points=\"22,6 12,13 2,6\"/></svg>",
+      "title": "E-mail",
+      "detail": "contato@eujatope.com.br",
+      "description": "Respondemos em até 48 horas úteis."
+    },
+    {
+      "icon": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"2\" width=\"20\" height=\"20\" rx=\"5\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/><circle cx=\"17.5\" cy=\"6.5\" r=\"1.5\" fill=\"currentColor\" stroke=\"none\"/></svg>",
+      "title": "Instagram",
+      "detail": "@eujatope",
+      "description": "Dicas rápidas e novidades do blog."
+    }
+  ],
+  "form": {
+    "title": "Envie uma mensagem",
+    "subtitle": "Preencha o formulário e retornaremos o mais breve possível.",
+    "nameLabel": "Nome",
+    "namePlaceholder": "Seu nome",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "seu@email.com",
+    "subjectLabel": "Assunto",
+    "subjectPlaceholder": "Selecione um assunto",
+    "subjects": [
+      { "value": "sugestao", "label": "Sugestão de tema para artigo" },
+      { "value": "duvida", "label": "Dúvida sobre jogo ou mecânica" },
+      { "value": "parceria", "label": "Proposta de parceria" },
+      { "value": "outro", "label": "Outro" }
+    ],
+    "messageLabel": "Mensagem",
+    "messagePlaceholder": "Sua mensagem...",
+    "submitText": "Enviar Mensagem",
+    "successText": "Mensagem enviada!"
+  },
+  "faq": {
+    "title": "Perguntas Frequentes",
+    "items": [
+      { "q": "Vocês jogam os jogos que recomendam?", "a": "Sim. Todos os guias e reviews são baseados em experiência real com o jogo. Quando usamos dados externos, deixamos isso claro." },
+      { "q": "Como vocês ganham dinheiro?", "a": "Através de links de afiliado (lojas de apps e similares). Você não paga mais por isso; a comissão nos ajuda a manter o site gratuito." },
+      { "q": "Qual é o melhor modo do Fruit Ninja para iniciantes?", "a": "Recomendamos começar pelo modo Classic, que não tem limite de tempo e permite aprender os combos sem pressão. Temos um guia completo no blog." },
+      { "q": "Posso sugerir um jogo para review?", "a": "Sim. Use o formulário acima ou o e-mail. Priorizamos os pedidos mais frequentes dos leitores." }
+    ]
+  }
+}
