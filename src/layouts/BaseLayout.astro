@@ -3,6 +3,8 @@ import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import { readData } from '../lib/readData';
+import HeadPlugins from '../plugins/_slots/HeadPlugins.astro';
+import BodyEndPlugins from '../plugins/_slots/BodyEndPlugins.astro';
 
 const site = readData('siteConfig.json') || {};
 const menu = readData('menu.json') || { items: [] };
@@ -258,6 +260,8 @@ const schemaGraph = { '@context': 'https://schema.org', '@graph': graphItems };
 
     <!-- JSON-LD: @graph -->
     <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+
+    <HeadPlugins />
   </head>
   <body class="grain">
     <Navbar />
@@ -283,5 +287,7 @@ const schemaGraph = { '@context': 'https://schema.org', '@graph': graphItems };
         observer.observe(el);
       });
     </script>
+
+    <BodyEndPlugins />
   </body>
 </html>

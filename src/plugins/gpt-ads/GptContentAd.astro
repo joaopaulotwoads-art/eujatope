@@ -1,0 +1,54 @@
+---
+// Bloco de anúncio de conteúdo (Content 1–4)
+// Uso: <GptContentAd num={1} /> ... <GptContentAd num={4} />
+
+interface Props {
+  num: 1 | 2 | 3 | 4;
+}
+
+const { num } = Astro.props;
+
+const config = {
+  1: { slot: '/22831019296/eujatope.com.br/eujatope.com.br_mw_content1_15062026', div: 'div-gpt-ad-1783100929702-0', lazy: false },
+  2: { slot: '/22831019296/eujatope.com.br/eujatope.com.br_mw_content2_15062026', div: 'div-gpt-ad-1783100929702-1', lazy: true  },
+  3: { slot: '/22831019296/eujatope.com.br/eujatope.com.br_mw_content3_15062026', div: 'div-gpt-ad-1783100929702-2', lazy: false },
+  4: { slot: '/22831019296/eujatope.com.br/eujatope.com.br_mw_content4_15062026', div: 'div-gpt-ad-1783100929702-3', lazy: false },
+} as const;
+
+const { slot, div, lazy } = config[num];
+const sizes = [[250, 250], [336, 280], [300, 250]];
+---
+
+<div class="gpt-content-ad">
+  <script define:vars={{ slot, div, sizes, lazy }}>
+    window.googletag = window.googletag || { cmd: [] };
+    googletag.cmd.push(function () {
+      googletag.defineSlot(slot, sizes, div).addService(googletag.pubads());
+      if (lazy) {
+        googletag.pubads().enableLazyLoad({
+          fetchMarginPercent: 20,
+          renderMarginPercent: 10,
+          mobileScaling: 2.0,
+        });
+      }
+      googletag.enableServices();
+    });
+  </script>
+
+  <div id={div}>
+    <script define:vars={{ div }}>
+      googletag.cmd.push(function () { googletag.display(div); });
+    </script>
+  </div>
+
+  <div class="gpt-separator">ADS</div>
+</div>
+
+<style>
+  .gpt-content-ad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1.75rem 0;
+  }
+</style>

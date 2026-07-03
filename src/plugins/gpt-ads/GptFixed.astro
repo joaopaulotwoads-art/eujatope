@@ -1,0 +1,72 @@
+---
+// Banners fixos: desktop (728/970/980×90) e mobile (320/300×50)
+// O CSS oculta cada versão no breakpoint oposto
+---
+
+<!-- Fixed Desktop -->
+<div class="gpt-fixed gpt-fixed--desktop">
+  <script>
+    window.googletag = window.googletag || { cmd: [] };
+    googletag.cmd.push(function () {
+      googletag
+        .defineSlot(
+          '/22831019296/eujatope.com.br/eujatope.com.br_w_fixed_15062026',
+          [[728, 90], [970, 90], [980, 90]],
+          'div-gpt-ad-1783100929702-5'
+        )
+        .addService(googletag.pubads());
+      googletag.enableServices();
+    });
+  </script>
+  <div id="div-gpt-ad-1783100929702-5">
+    <script>
+      googletag.cmd.push(function () { googletag.display('div-gpt-ad-1783100929702-5'); });
+    </script>
+  </div>
+</div>
+
+<!-- Fixed Mobile -->
+<div class="gpt-fixed gpt-fixed--mobile">
+  <script>
+    window.googletag = window.googletag || { cmd: [] };
+    googletag.cmd.push(function () {
+      googletag
+        .defineSlot(
+          '/22831019296/eujatope.com.br/eujatope.com.br_m_fixed_15062026',
+          [[320, 50], [300, 50]],
+          'div-gpt-ad-1783100929702-6'
+        )
+        .addService(googletag.pubads());
+      googletag.enableServices();
+    });
+  </script>
+  <div id="div-gpt-ad-1783100929702-6">
+    <script>
+      googletag.cmd.push(function () { googletag.display('div-gpt-ad-1783100929702-6'); });
+    </script>
+  </div>
+</div>
+
+<style>
+  .gpt-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 900;
+    background: #fff;
+    box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Oculta desktop em mobile e vice-versa */
+  .gpt-fixed--desktop { display: none; }
+  .gpt-fixed--mobile  { display: flex;  }
+
+  @media (min-width: 1024px) {
+    .gpt-fixed--desktop { display: flex; }
+    .gpt-fixed--mobile  { display: none; }
+  }
+</style>

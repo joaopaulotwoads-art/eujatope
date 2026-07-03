@@ -6,6 +6,7 @@ import ProductReviewCard from '../components/affiliate/ProductReviewCard.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import RelatedPosts from '../components/RelatedPosts.astro';
 import { readData } from '../lib/readData';
+import GptContentAd from '../plugins/gpt-ads/GptContentAd.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -223,10 +224,16 @@ const breadcrumbs = [
             </div>
           )}
 
+          {/* Content 1 — antes do corpo do artigo */}
+          <GptContentAd num={1} />
+
           {/* 4. Guide content (article body markdown — renders after product cards) */}
           <div class="post-content">
             <Content />
           </div>
+
+          {/* Content 2 — após o corpo do artigo (lazy) */}
+          <GptContentAd num={2} />
 
           {/* 5. FAQ */}
           {post.data.faqs && post.data.faqs.length > 0 && (
@@ -243,6 +250,9 @@ const breadcrumbs = [
             </section>
           )}
 
+          {/* Content 3 — após FAQ */}
+          <GptContentAd num={3} />
+
           {/* 6. Conclusão */}
           {post.data.conclusion && (
             <div class="post-conclusion">
@@ -250,6 +260,9 @@ const breadcrumbs = [
               {post.data.conclusion.split(/\n\n+/).map((p) => <p>{p}</p>)}
             </div>
           )}
+
+          {/* Content 4 — após conclusão */}
+          <GptContentAd num={4} />
 
           {/* 7. Especialistas */}
           {postAuthor && (

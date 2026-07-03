@@ -1,0 +1,41 @@
+---
+// Out-of-page slots: Interstitial, Top Anchor e Bottom Anchor
+// Esses formatos são gerenciados 100% pelo GPT — sem divs visíveis
+---
+
+<script>
+  window.googletag = window.googletag || { cmd: [] };
+
+  // Interstitial
+  googletag.cmd.push(function () {
+    const interstitial = googletag.defineOutOfPageSlot(
+      '/22831019296/eujatope.com.br/eujatope.com.br_Interstitial_15062026',
+      googletag.enums.OutOfPageFormat.INTERSTITIAL
+    );
+    if (interstitial) interstitial.addService(googletag.pubads());
+    googletag.enableServices();
+    if (interstitial) googletag.display(interstitial);
+  });
+
+  // Top Anchor
+  googletag.cmd.push(function () {
+    const topAnchor = googletag.defineOutOfPageSlot(
+      '/22831019296/eujatope.com.br/eujatope.com.br_m_TOP_ANCHOR_15062026',
+      googletag.enums.OutOfPageFormat.TOP_ANCHOR
+    );
+    if (topAnchor) topAnchor.addService(googletag.pubads());
+    googletag.enableServices();
+    if (topAnchor) googletag.display(topAnchor);
+  });
+
+  // Bottom Anchor
+  googletag.cmd.push(function () {
+    const bottomAnchor = googletag.defineOutOfPageSlot(
+      '/22831019296/eujatope.com.br/eujatope.com.br_m_BOTTOM_ANCHOR_15062026',
+      googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
+    );
+    if (bottomAnchor) bottomAnchor.addService(googletag.pubads());
+    googletag.enableServices();
+    if (bottomAnchor) googletag.display(bottomAnchor);
+  });
+</script>

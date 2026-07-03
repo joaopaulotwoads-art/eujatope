@@ -1,0 +1,77 @@
+---
+// Google Publisher Tags — header scripts
+// Carrega GPT, tracking UTM e configura key-values de targeting
+---
+
+<!-- GPT Library -->
+<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+
+<!-- Tracking UTM (OTZ) -->
+<script async src="https://storage.googleapis.com/otz-scripts/tracking-utms.js"></script>
+
+<!-- GPT: configuração e targeting por UTM -->
+<script>
+  window.googletag = window.googletag || { cmd: [] };
+  googletag.cmd.push(function () {
+    googletag.setConfig({
+      targeting: {
+        id_post_wp: [window.location.pathname],
+      },
+    });
+    const p = new URLSearchParams(window.location.search);
+    const kv = {
+      utm_source:   p.get('utm_source'),
+      utm_medium:   p.get('utm_medium'),
+      utm_campaign: p.get('utm_campaign'),
+      utm_term:     p.get('utm_term'),
+      utm_content:  p.get('utm_content'),
+      utm_custom:   p.get('utm_custom'),
+    };
+    Object.entries(kv).forEach(([k, v]) => {
+      if (v) googletag.pubads().setTargeting(k, [v]);
+    });
+  });
+</script>
+
+<!-- OTZ: envio de key-values via beacon -->
+<script>
+  (function () {
+    const p = new URLSearchParams(window.location.search);
+    let data = {
+      utm_medium:    p.get('utm_medium')    || undefined,
+      utm_campaign:  p.get('utm_campaign')  || undefined,
+      utm_placement: p.get('utm_placement') || undefined,
+      utm_term:      p.get('utm_term')      || undefined,
+      utm_content:   p.get('utm_content')   || undefined,
+      utm_custom:    p.get('utm_custom')    || undefined,
+      network_code:  22831019296,
+    };
+    data = Object.fromEntries(Object.entries(data).filter(([, v]) => v !== undefined));
+    if (Object.keys(data).length > 1) {
+      const url = 'https://painel.otzads.net/forms/submitKeyValuesJs';
+      const body = JSON.stringify(data);
+      if (!navigator.sendBeacon(url, body)) {
+        fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true });
+      }
+    }
+  })();
+</script>
+
+<!-- Separator style (usado pelos blocos de conteúdo) -->
+<style is:global>
+  .gpt-separator {
+    font-size: 12px;
+    display: flex;
+    color: #b0b0b0;
+    align-items: center;
+    text-align: center;
+  }
+  .gpt-separator::before,
+  .gpt-separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #d9d9d9;
+  }
+  .gpt-separator::before { margin-right: 0.25em; }
+  .gpt-separator::after  { margin-left:  0.25em; }
+</style>
