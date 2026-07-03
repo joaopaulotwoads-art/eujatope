@@ -9,28 +9,21 @@ interface Props {
 const { num } = Astro.props;
 
 const config = {
-  1: { slot: '/22831019296/eujatope.com.br/eujatope.com.br_mw_content1_15062026', div: 'div-gpt-ad-1783100929702-0', lazy: false },
-  2: { slot: '/22831019296/eujatope.com.br/eujatope.com.br_mw_content2_15062026', div: 'div-gpt-ad-1783100929702-1', lazy: true  },
-  3: { slot: '/22831019296/eujatope.com.br/eujatope.com.br_mw_content3_15062026', div: 'div-gpt-ad-1783100929702-2', lazy: false },
-  4: { slot: '/22831019296/eujatope.com.br/eujatope.com.br_mw_content4_15062026', div: 'div-gpt-ad-1783100929702-3', lazy: false },
+  1: { slot: '/22831019296/eujatope.com.br/eujatope.com.br_mw_content1_15062026', div: 'div-gpt-ad-1783100929702-0' },
+  2: { slot: '/22831019296/eujatope.com.br/eujatope.com.br_mw_content2_15062026', div: 'div-gpt-ad-1783100929702-1' },
+  3: { slot: '/22831019296/eujatope.com.br/eujatope.com.br_mw_content3_15062026', div: 'div-gpt-ad-1783100929702-2' },
+  4: { slot: '/22831019296/eujatope.com.br/eujatope.com.br_mw_content4_15062026', div: 'div-gpt-ad-1783100929702-3' },
 } as const;
 
-const { slot, div, lazy } = config[num];
+const { slot, div } = config[num];
 const sizes = [[250, 250], [336, 280], [300, 250]];
 ---
 
 <div class="gpt-content-ad">
-  <script define:vars={{ slot, div, sizes, lazy }}>
+  <script define:vars={{ slot, div, sizes }}>
     window.googletag = window.googletag || { cmd: [] };
     googletag.cmd.push(function () {
       googletag.defineSlot(slot, sizes, div).addService(googletag.pubads());
-      if (lazy) {
-        googletag.pubads().enableLazyLoad({
-          fetchMarginPercent: 20,
-          renderMarginPercent: 10,
-          mobileScaling: 2.0,
-        });
-      }
     });
   </script>
 
