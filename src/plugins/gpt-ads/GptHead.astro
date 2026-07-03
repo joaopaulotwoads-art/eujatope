@@ -9,7 +9,7 @@
 <!-- Tracking UTM (OTZ) -->
 <script async src="https://storage.googleapis.com/otz-scripts/tracking-utms.js"></script>
 
-<!-- GPT: configuração e targeting por UTM -->
+<!-- GPT: configuração, targeting por UTM e inicialização dos serviços -->
 <script>
   window.googletag = window.googletag || { cmd: [] };
   googletag.cmd.push(function () {
@@ -30,6 +30,8 @@
     Object.entries(kv).forEach(([k, v]) => {
       if (v) googletag.pubads().setTargeting(k, [v]);
     });
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
   });
 </script>
 

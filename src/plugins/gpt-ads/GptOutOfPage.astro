@@ -13,7 +13,6 @@
       googletag.enums.OutOfPageFormat.INTERSTITIAL
     );
     if (interstitial) interstitial.addService(googletag.pubads());
-    googletag.enableServices();
     if (interstitial) googletag.display(interstitial);
   });
 
@@ -24,7 +23,6 @@
       googletag.enums.OutOfPageFormat.TOP_ANCHOR
     );
     if (topAnchor) topAnchor.addService(googletag.pubads());
-    googletag.enableServices();
     if (topAnchor) googletag.display(topAnchor);
   });
 
@@ -35,7 +33,6 @@
       googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
     );
     if (bottomAnchor) bottomAnchor.addService(googletag.pubads());
-    googletag.enableServices();
     if (bottomAnchor) googletag.display(bottomAnchor);
   });
 </script>
