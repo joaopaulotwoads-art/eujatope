@@ -1,0 +1,3 @@
+google.com, 22831019296, DIRECT, f08c47fec0942fa0
+otzads.net, b0-b540dvstbvozl3xdzh9ggtxx2e2o3efrs, DIRECT
+google.com, pub-9063486391387983, RESELLER, f08c47fec0942fa0
